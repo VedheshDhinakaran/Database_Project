@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='Amrita_Style.css') }}">
+        <script src="{{ url_for('static', filename='Amrita_JavaScript.js') }}"></script>
+        <title>
+            Amrita_AcademicCoordinatorOffice_index
+        </title>   
+    </head>
+    
+    <body>
+            <center>
+            <div class="header">
+                <img src="{{ url_for('static', filename='Amrita_Logo.jpeg') }}" width="35%" height="15%">
+            </div>
+        </center>
+        
+        <!-- Navigation Bar-->
+        <div class="navbar">
+            <a href="{{ url_for('admin_home') }}">Home</a>
+            <a href="{{ url_for('admin_re_registration') }}">Re-Registration</a>
+            <a href="{{ url_for('admin_additional_slot') }}" class="active">Additional Slot</a>
+            <a href="{{ url_for('admin_supply') }}">Supply</a>
+            <a href="{{ url_for('admin_contact_course') }}">Contact Courses</a>
+            <button id="logout-button" onclick="logout()" >Log Out</button>
+        </div>
+        <br>
+        <label for="semesterSelect_1">Select Semester:</label>
+    <select id="semesterSelect_1" onchange="updateTable_AS()">
+        <option value="">--Select Semester--</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        </select>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Course Name</th>
+                </tr>
+            </thead>
+            <tbody id="coursesTableBody">
+            </tbody>
+        </table>
+    
+        <button onclick="submitSelectedCourses_AS()" style="background-color: #a94064; color: white;">Add Selected Courses</button>
+        <br>
+        <br>
+        <a href="{{ url_for('admin_view_as') }}" class="button-like">View Applications</a>
+        <a href="{{ url_for('view_paid_courses_as') }}" class="button-like">View Paid Applications</a>
+
+        </body>
+        
+        </html>

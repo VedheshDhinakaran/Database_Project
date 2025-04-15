@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='Amrita_Style.css') }}">
+        <script src="{{ url_for('static', filename='Amrita_JavaScript.js') }}"></script>
+        <script>
+            window.onload = fetch_st_CC; <!-- Fetch all records when the page loads -->
+        </script>
+                <script type="text/javascript">
+                    // Prevent the page from being stored in the back-forward cache (bfcache)
+                    window.onunload = function () { window.location.reload(true); };
+                  </script>
+
+  
+        <title>View Student Applications</title>
+    </head>
+    <body>
+        
+        <center>
+            <div class="header">
+                <img src="{{ url_for('static', filename='Amrita_Logo.jpeg') }}" width="35%" height="15%">
+            </div>
+        </center>
+         <!-- Navigation Bar-->
+         <div class="navbar">
+            <a href="{{ url_for('admin_home') }}">Home</a>
+            <a href="{{ url_for('admin_re_registration') }}">Re-Registration</a>
+            <a href="{{ url_for('admin_additional_slot') }}">Additional Slot</a>
+            <a href="{{ url_for('admin_supply') }}">Supply</a>
+            <a href="{{ url_for('admin_contact_course') }}" class="active">Contact Courses</a>
+            <button id="logout-button" onclick="logout()" >Log Out</button>
+        </div>
+        <br>
+        <h1>Contact Course Applications</h1>
+
+        <!-- Search Form -->
+        <form id="searchForm" onsubmit="handleSearch(event)">
+            <label for="searchRollNo">Search by Roll No:</label>
+            <input type="text" id="searchRollNo" name="searchRollNo" placeholder="Enter Roll No">
+            <br>
+            <br>
+            <label for="searchCourseName">Search by Course Name:</label>
+            <input type="text" id="searchCourseName" name="searchCourseName" placeholder="Enter Course Name">
+            <br>
+            <br>
+            <button type="submit">Search</button>
+
+        </form>
+
+        <!-- Student Table -->
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Roll No</th>
+                    <th>Student Name</th>
+                    <th>Course Name</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody_CC">
+                {% if paid_courses %}
+                    {% for course in paid_courses %}
+                    <tr>
+                        <td>{{ course[0] }}</td>
+                        <td>{{ course[1] }}</td>
+                        <td>{{ course[2] }}</td>
+                        <td>
+                            <input type="checkbox" name="selectStudent" value="{{ course[0] }}">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4">No records found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+       
+<br>
+
+<!-- Mark as Paid Button -->
+<button onclick="handlePaidButtonClick()">Mark as Paid</button>
+<br>
+    </body>
+</html>

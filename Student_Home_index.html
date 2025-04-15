@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='Amrita_Style.css') }}">
+        <script src="{{ url_for('static', filename='Amrita_JavaScript.js') }}"></script>
+        <title>
+            Amrita_Students_AcademicCoordinatorOffice_index
+        </title>
+        <script type="text/javascript">
+            // Prevent the page from being stored in the back-forward cache (bfcache)
+            window.onunload = function () { window.location.reload(true); };
+          </script>
+<script type="text/javascript">
+    // Function to check if the user is logged out using cookies
+    function isUserLoggedOut() {
+      // Check for a cookie or session indicating that the user is logged out
+      return document.cookie.indexOf('user_logged_out=true') !== -1;
+    }
+  
+    // Only apply the back-button blocking logic if the user is logged out
+    if (isUserLoggedOut()) {
+      // Detect if the page was loaded from the cache (back navigation)
+      if (performance.navigation.type === 2) {
+        // If yes, force a reload
+        window.location.replace("/login");  // Redirect to login page
+      }
+  
+      // Force the browser to redirect on back navigation
+      window.onpopstate = function() {
+        window.location.replace("/login");  // Redirect to login page
+      }
+  
+      // Optionally push a new state so we can detect back navigation after logout
+      history.pushState(null, null, window.location.href);  // Push current state to history
+    }
+  </script>
+  
+    </head>
+    <body>
+            <center>
+            <div class="header">
+                <img src="{{ url_for('static', filename='Amrita_Logo.jpeg') }}" width="35%" height="15%">
+            </div>
+        </center>
+        
+        <!-- Navigation Bar-->
+        <div class="navbar">
+            <a href="{{ url_for('student') }}" class="active">Home</a>
+            <a href="{{ url_for('view_arrears') }}">View Arrears</a>
+            <a href="{{ url_for('course_re_registration') }}">Course Re-Registration</a>
+            <a href="{{ url_for('apply_additional_slot') }}">Apply for Additional Slot</a>
+            <a href="{{ url_for('apply_supply') }}">Apply for Supply</a>
+            <a href="{{ url_for('apply_contact_course') }}">Apply for Contact Courses</a>
+            <button id="logout-button" onclick="logout()" >Log Out</button>
+        </div>
+        <br>
+        <br>
+        <!-- Name of Student -->
+        <h3>Name: <span>{{ student_data[0] }}</span></h3><br>
+    <h3>Registration Number: <span>{{ student_data[1] }}</span></h3><br>
+    <h3>Branch: <span>{{ student_data[4] }}</span></h3><br>
+    <h3>Current CGPA: <span>{{ student_data[2] }}</span></h3><br>
+    <h3>Current Semester: <span>{{ student_data[3] }}</span></h3><br>
+
+        
+            </div>
+        <br>
+        <br>
+        <!--courses of Student-->
+    </body>
+</html>

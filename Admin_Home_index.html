@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='Amrita_Style.css') }}">
+        <script src="{{ url_for('static', filename='Amrita_JavaScript.js') }}"></script>
+        <title>
+            Amrita_Admin_AcademicCoordinatorOffice_index
+        </title>
+        
+          
+    </head>
+    <body>
+            <center>
+            <div class="header">
+                <img src="{{ url_for('static', filename='Amrita_Logo.jpeg') }}" width="35%" height="15%">
+            </div>
+        </center>
+        
+        <!-- Navigation Bar-->
+        <div class="navbar">
+            <a href="{{ url_for('admin_home') }}" class="active">Home</a>
+            <a href="{{ url_for('admin_re_registration') }}">Re-Registration</a>
+            <a href="{{ url_for('admin_additional_slot') }}">Additional Slot</a>
+            <a href="{{ url_for('admin_supply') }}">Supply</a>
+            <a href="{{ url_for('admin_contact_course') }}">Contact Courses</a>
+            <button id="logout-button" onclick="logout()" >Log Out</button>
+
+        </div>
+        <br>
+        <br>
+        <!--Name of Admin-->
+        <h3>Name: <span>{{ admin_data[0] }}</span></h3>
+        <br>
+        <h3>Employee ID: <span>{{ admin_data[1] }}</span></h3>
+        <br> 
+        
+    </body>
+    
+</html>

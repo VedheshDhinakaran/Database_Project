@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='Amrita_Style.css') }}">
+        <script src="{{ url_for('static', filename='Amrita_JavaScript.js') }}"></script>
+        <title>Amrita Academic Coordinator Office</title>
+
+        <style>
+            /* Hide elements with the class 'no-print' during printing */
+            @media print {
+                .no-print {
+                    display: none;
+                }
+            }
+
+            /* Container for header and button */
+            .header-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            .header-container h2 {
+                margin: 0;
+            }
+
+            .header-container .no-print {
+                
+                color: white; /* Optional: Set text color for the button */
+                border: none; /* Optional: Remove border */
+                padding: 10px 20px; /* Optional: Add padding for the button */
+                cursor: pointer; /* Optional: Change cursor to pointer */
+            }
+
+            
+        </style>
+    </head>
+    <body>
+        <center>
+            <div class="header">
+                <img src="{{ url_for('static', filename='Amrita_Logo.jpeg') }}" width="35%" height="15%">
+            </div>
+        </center>
+
+        <div class="header-container">
+            <h2>Additional Slot Confirmation</h2>
+
+            <!-- Add class 'no-print' to hide the button during printing -->
+            <button onclick="window.print()" class="no-print">Print Page</button>
+        </div>
+
+        <br>
+        <!-- Display student information -->
+        <h3>Name: {{ student_name }}</h3>
+        <br>
+        <h3>Registration Number: {{ roll_no }}</h3>
+        <br>
+        <h3>Branch: {{ branch }}</h3>
+       
+        <br>
+        <!-- Table to display course details -->
+        <table border="1" style="width: 70%; text-align: left;">
+            <thead>
+                <tr>
+                    <th>Applied Courses</th> <!-- Only Course Code header -->
+                </tr>
+            </thead>
+            <tbody id="coursesTableBody">
+                {% for course in courses %}
+                    <tr>
+                        <!-- Only display Course Code -->
+                        <td>{{ course[0] }}</td> <!-- Course Code -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+    </body>
+</html>

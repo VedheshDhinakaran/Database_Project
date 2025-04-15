@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='Amrita_Style.css') }}">
+        <script src="{{ url_for('static', filename='Amrita_JavaScript.js') }}"></script>
+        <title>
+            Amrita_AcademicCoordinatorOffice_index
+        </title>
+    </head>
+    <body>
+            <center>
+            <div class="header">
+                <img src="{{ url_for('static', filename='Amrita_Logo.jpeg') }}" width="35%" height="15%">
+            </div>
+        </center>
+        
+        <!-- Navigation Bar-->
+        <div class="navbar">
+            <a href="{{ url_for('student') }}">Home</a>
+            <a href="{{ url_for('view_arrears') }}" class="active">View Arrears</a>
+            <a href="{{ url_for('course_re_registration') }}">Course Re-Registration</a>
+            <a href="{{ url_for('apply_additional_slot') }}">Apply for Additional Slot</a>
+            <a href="{{ url_for('apply_supply') }}">Apply for Supply</a>
+            <a href="{{ url_for('apply_contact_course') }}">Apply for Contact Courses</a>
+            <button id="logout-button" onclick="logout()" >Log Out</button>
+        </div>
+        <br>
+        <br>
+        <h2>View Arrears List</h2>
+        <br>
+        <br>
+        <!-- Semester Dropdown -->
+    <label for="semesterSel">Select Semester:</label>
+    <select id="semesterSel" onchange="fetchArrearsData()">
+        <option value="">--Select Semester--</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+    </select>
+
+    <!-- Arrears Table -->
+    <div id="tableContainer">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Course Code</th>
+                    <th>Course Name</th>
+                </tr>
+            </thead>
+            <tbody id="coursesTableBody">
+                <!-- Data will be dynamically populated here -->
+            </tbody>
+        </table>
+    </div>
+        </body>
+        </html>

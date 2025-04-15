@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, proxy-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+    <title>Login-Signup</title>
+    <script type="text/javascript">
+        window.onload = function() {
+          if (performance.navigation.type == 2) { // Check if the page was loaded from the back/forward cache
+            window.location.reload(true); // Force reload from the server
+          }
+        }
+      </script>
+      
+    <style>
+        /* Original CSS retained */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Roboto, -apple-system, "Helvetica Neue", "Segoe UI", Arial,
+            sans-serif;
+            background-color: #cddbef;
+        }
+
+        .forms-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .forms {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 30px;
+        }
+
+        .form-wrapper {
+            animation: hideLayer 0.3s ease-out forwards;
+        }
+
+        .form-wrapper.is-active {
+            animation: showLayer 0.3s ease-in forwards;
+        }
+
+        @keyframes showLayer {
+            50% {
+                z-index: 1;
+            }
+            100% {
+                z-index: 1;
+            }
+        }
+
+        @keyframes hideLayer {
+            0% {
+                z-index: 1;
+            }
+            49.999% {
+                z-index: 1;
+            }
+        }
+
+        .switcher {
+            position: relative;
+            cursor: pointer;
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+            padding: 0;
+            text-transform: uppercase;
+            font-family: inherit;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            color: red;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            transform: translateX(0);
+            transition: all 0.3s ease-out;
+        }
+
+        .form-wrapper.is-active .switcher-login {
+            color: red;
+            transform: translateX(90px);
+        }
+
+        .form-wrapper.is-active .switcher-signup {
+            color: red;
+            transform: translateX(-90px);
+        }
+
+        .underline {
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            overflow: hidden;
+            pointer-events: none;
+            width: 100%;
+            height: 2px;
+        }
+
+        .underline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: inherit;
+            display: block;
+            width: inherit;
+            height: inherit;
+            background-color: currentColor;
+            transition: transform 0.2s ease-out;
+        }
+
+        .switcher-login .underline::before {
+            transform: translateX(101%);
+        }
+
+        .switcher-signup .underline::before {
+            transform: translateX(-101%);
+        }
+
+        .form-wrapper.is-active .underline::before {
+            transform: translateX(0);
+        }
+
+        .form {
+            background-color: #cddbef;
+            overflow: hidden;
+            min-width: 260px;
+            margin-top: 50px;
+            padding: 30px 25px;
+            border-radius: 5px;
+            transform-origin: top;
+        }
+
+        .form-login {
+            animation: hideLogin 0.3s ease-out forwards;
+        }
+
+        .form-wrapper.is-active .form-login {
+            animation: showLogin 0.3s ease-in forwards;
+        }
+
+        @keyframes showLogin {
+            0% {
+                background: #d7e7f1;
+                transform: translate(40%, 10px);
+            }
+            50% {
+                transform: translate(0, 0);
+            }
+            100% {
+                background-color: #fff;
+                transform: translate(35%, -20px);
+            }
+        }
+
+        @keyframes hideLogin {
+            0% {
+                background-color: #fff;
+                transform: translate(35%, -20px);
+            }
+            50% {
+                transform: translate(0, 0);
+            }
+            100% {
+                background: #d7e7f1;
+                transform: translate(40%, 10px);
+            }
+        }
+
+        .form-signup {
+            animation: hideSignup 0.3s ease-out forwards;
+        }
+
+        .form-wrapper.is-active .form-signup {
+            animation: showSignup 0.3s ease-in forwards;
+        }
+
+        @keyframes showSignup {
+            0% {
+                background: #d7e7f1;
+                transform: translate(-40%, 10px) scaleY(0.8);
+            }
+            50% {
+                transform: translate(0, 0) scaleY(0.8);
+            }
+            100% {
+                background-color: #fff;
+                transform: translate(-35%, -20px) scaleY(1);
+            }
+        }
+
+        @keyframes hideSignup {
+            0% {
+                background-color: #fff;
+                transform: translate(-35%, -20px) scaleY(1);
+            }
+            50% {
+                transform: translate(0, 0) scaleY(0.8);
+            }
+            100% {
+                background: #d7e7f1;
+                transform: translate(-40%, 10px) scaleY(0.8);
+            }
+        }
+
+        .form fieldset {
+            position: relative;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            transition: all 0.3s ease-out;
+        }
+
+        .form-login fieldset {
+            transform: translateX(-50%);
+        }
+
+        .form-signup fieldset {
+            transform: translateX(50%);
+        }
+
+        .form-wrapper.is-active fieldset {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.4s ease-in, transform 0.35s ease-in;
+        }
+
+        .form legend {
+            position: absolute;
+            overflow: hidden;
+            width: 1px;
+            height: 1px;
+            clip: rect(0 0 0 0);
+        }
+
+        .input-block {
+            margin-bottom: 20px;
+        }
+
+        .input-block label {
+            font-size: 14px;
+            color: red;
+        }
+
+        .input-block input {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            padding-right: 15px;
+            padding-left: 15px;
+            font-size: 16px;
+            line-height: 40px;
+            color: #3b4465;
+            background: #eef9fe;
+            border: 1px solid #cddbef;
+            border-radius: 2px;
+        }
+
+        .form [type="submit"] {
+            opacity: 0;
+            display: block;
+            min-width: 120px;
+            margin: 30px auto 10px;
+            font-size: 18px;
+            line-height: 40px;
+            border-radius: 25px;
+            border: none;
+            transition: all 0.3s ease-out;
+        }
+
+        .form-wrapper.is-active .form [type="submit"] {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 0.4s ease-in;
+        }
+
+        .btn-login {
+            color: #fbfdff;
+            background: red;
+            transform: translateX(-30%);
+        }
+
+        .btn-signup {
+            color: #fbfdff;
+            background: red;
+            box-shadow: inset 0 0 0 2px #a7e245;
+            transform: translateX(30%);
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <div class="header">
+            <img src="{{ url_for('static', filename='Amrita_Logo.jpeg') }}" width="35%" height="15%">
+        </div>
+    </center>
+<section class="forms-section">
+    <div class="forms">
+        <div class="form-wrapper is-active" id="login-wrapper">
+            <button type="button" class="switcher switcher-login" onclick="switchToLogin()">
+                Login
+                <span class="underline"></span>
+            </button>
+
+            <!-- Flash message display -->
+            <div id="flash-messages">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="flash-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            <form class="form form-login" action="{{ url_for('login') }}" method="POST" onsubmit="return validateLoginForm()">
+                <fieldset>
+                    <legend>Please, enter your Username and password for login.</legend>
+                    <div class="input-block">
+                        <label for="login-user">User Name</label>
+                        <input id="login-user" name="login-user" type="text" required>
+                    </div>
+                    <div class="input-block">
+                        <label for="login-password">Password</label>
+                        <input id="login-password" name="login-password" type="password" minlength="6" required>
+                    </div>
+                    <div class="input-block">
+                        <label for="role">Select User Role</label>
+                        <select id="role" name="role" required>
+                            <option value="none" selected disabled hidden>Select Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="student">Student</option>
+                        </select>
+                    </div>
+                </fieldset>
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+            
+        </div>
+
+        <div class="form-wrapper" id="signup-wrapper">
+            <button type="button" class="switcher switcher-signup" onclick="switchToSignup()">
+                Sign Up
+                <span class="underline"></span>
+            </button>
+            <form class="form form-signup" onsubmit="return validateSignup()">
+                <fieldset>
+                    <legend>Please, enter your email, password and password confirmation for sign up.</legend>
+                    <div class="input-block">
+                        <label for="signup-email">E-mail</label>
+                        <input id="signup-email" type="email" required>
+                    </div>
+                    <div class="input-block">
+                        <label for="signup-password">Password</label>
+                        <input id="signup-password" type="password" minlength="6" required>
+                    </div>
+                    <div class="input-block">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input id="confirm-password" type="password" minlength="6" required>
+                    </div>
+                </fieldset>
+                <button type="submit" class="btn-signup">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    function switchToLogin() {
+        document.getElementById("login-wrapper").classList.add("is-active");
+        document.getElementById("signup-wrapper").classList.remove("is-active");
+    }
+
+    function switchToSignup() {
+        document.getElementById("signup-wrapper").classList.add("is-active");
+        document.getElementById("login-wrapper").classList.remove("is-active");
+    }
+
+    function validateLoginForm() {
+    const role = document.getElementById("role").value;
+
+    if (role === "none") {
+        alert("Please select a role.");
+        return false;
+    }
+
+    return true;
+}
+
+
+    function validateSignup() {
+        const password = document.getElementById("signup-password").value;
+        const confirmPassword = document.getElementById("confirm-password").value;
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            return false;
+        }
+
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters.");
+            return false;
+        }
+
+        return true;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const switchToSignup = document.getElementById('switch-to-signup');
+            const switchToLogin = document.getElementById('switch-to-login');
+            const flashMessagesContainer = document.getElementById('flash-messages');
+
+            // Function to clear flash messages
+            function clearFlashMessages() {
+                if (flashMessagesContainer) {
+                    flashMessagesContainer.remove();  // Remove the flash message container
+                    const newFlashContainer = document.createElement('div');  // Create a new empty container
+                    newFlashContainer.id = 'flash-messages';  // Set its ID to match the original
+                    document.body.insertBefore(newFlashContainer, document.getElementById('form-container'));
+                }
+            }
+
+            // Event listener to switch to signup form
+            switchToSignup.addEventListener('click', function() {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+                clearFlashMessages();  // Clear messages when switching to signup
+            });
+
+            // Event listener to switch to login form
+            switchToLogin.addEventListener('click', function() {
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+                clearFlashMessages();  // Clear messages when switching to login
+            });
+        });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='Amrita_Style.css') }}">
+        <script src="{{ url_for('static', filename='Amrita_JavaScript.js') }}"></script>
+        <script>
+            window.onload = fetchCourses_RR;
+        </script>
+                <script type="text/javascript">
+                    // Prevent the page from being stored in the back-forward cache (bfcache)
+                    window.onunload = function () { window.location.reload(true); };
+                  </script>
+<script type="text/javascript">
+    // Function to check if the user is logged out using cookies
+    function isUserLoggedOut() {
+      // Check for a cookie or session indicating that the user is logged out
+      return document.cookie.indexOf('user_logged_out=true') !== -1;
+    }
+  
+    // Only apply the back-button blocking logic if the user is logged out
+    if (isUserLoggedOut()) {
+      // Detect if the page was loaded from the cache (back navigation)
+      if (performance.navigation.type === 2) {
+        // If yes, force a reload
+        window.location.replace("/login");  // Redirect to login page
+      }
+  
+      // Force the browser to redirect on back navigation
+      window.onpopstate = function() {
+        window.location.replace("/login");  // Redirect to login page
+      }
+  
+      // Optionally push a new state so we can detect back navigation after logout
+      history.pushState(null, null, window.location.href);  // Push current state to history
+    }
+  </script>
+  
+        <title>
+            Amrita_AcademicCoordinatorOffice_index
+        </title>
+
+        <style>
+          /* Container for the buttons */
+          .button-container {
+              display: flex;
+              justify-content: space-between;
+              width: 50%; /* Adjust width as necessary */
+              margin: 0 auto;
+              margin-bottom: 20px; /* Add space below the button container */
+          }
+
+          .button-container button {
+              padding: 10px 20px;
+              background-color: #a94064; 
+              color: white;
+              border: none;
+              cursor: pointer;
+          }
+
+          .button-container button:hover {
+              background-color: #8c3352; /* Optional: Hover effect */
+          }
+      </style>
+    </head>
+    <body>
+            <center>
+            <div class="header">
+                <img src="{{ url_for('static', filename='Amrita_Logo.jpeg') }}" width="35%" height="15%">
+            </div>
+        </center>
+        
+        <!-- Navigation Bar-->
+        <div class="navbar">
+            <a href="{{ url_for('student') }}">Home</a>
+            <a href="{{ url_for('view_arrears') }}">View Arrears</a>
+            <a href="{{ url_for('course_re_registration') }}" class="active">Course Re-Registration</a>
+            <a href="{{ url_for('apply_additional_slot') }}">Apply for Additional Slot</a>
+            <a href="{{ url_for('apply_supply') }}">Apply for Supply</a>
+            <a href="{{ url_for('apply_contact_course') }}">Apply for Contact Courses</a>
+            <button id="logout-button" onclick="logout()" >Log Out</button>
+        </div>
+        <br>
+        <br>
+        <h2>Courses Offered</h2>
+        <br>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Course Name</th>
+                </tr>
+            </thead>
+            <tbody id="coursesTableBody">
+            </tbody>
+        </table>
+        <br>
+        <br>
+      
+
+           <!-- Container for buttons -->
+           <div class="button-container">
+            <!-- Submit Button -->
+            <button onclick="submit_RR()">Submit</button>
+            <!-- View Confirmation Page Button -->
+            <button onclick="location.href='/confirmation_page_rr1'">View Confirmation Page</button>
+        </div>
+        </body>
+        </html>
